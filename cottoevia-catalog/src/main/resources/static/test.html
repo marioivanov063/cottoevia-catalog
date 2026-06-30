@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Request Button</title>
+</head>
+<body>
+
+    <!-- Button Element -->
+    <button id="apiRequestButton">Send Request</button>
+
+    <!-- Script to handle the button click and API request -->
+    <script>
+        // Function to send the request
+        function sendApiRequest() {
+            fetch('http://localhost:8080/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any authentication headers if necessary
+                },
+                body: JSON.stringify({
+                    foodName: "baklava", 
+                    userId: "123e4567-e89b-12d3-a456-426614174000"
+                }) // Replace with your request payload
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Assuming the response is JSON
+            })
+            .then(data => {
+                console.log('Success:', data); // Handle the response data
+                alert('Request was successful: ' + JSON.stringify(data));
+            })
+            .catch(error => {
+                console.error('There was a problem with the request:', error);
+                alert('Request failed: ' + error.message);
+            });
+        }
+
+        // Add an event listener to the button
+        document.getElementById('apiRequestButton').addEventListener('click', sendApiRequest);
+    </script>
+    
+</body>
+</html>
